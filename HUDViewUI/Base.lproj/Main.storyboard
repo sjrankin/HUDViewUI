@@ -1,24 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="25098" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="25073"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HUDViewUI" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x09-kI-PKB">
+                                <rect key="frame" x="0.0" y="118" width="393" height="49"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTx-aQ-RcD">
+                                        <rect key="frame" x="136.66666666666666" y="7.6666666666666714" width="119.99999999999997" height="34"/>
+                                        <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="VJz-ab-6EN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="MKg-eB-jJV"/>
+                                    <constraint firstItem="nTx-aQ-RcD" firstAttribute="centerX" secondItem="x09-kI-PKB" secondAttribute="centerX" id="OrG-fi-xiA"/>
+                                    <constraint firstItem="nTx-aQ-RcD" firstAttribute="centerY" secondItem="x09-kI-PKB" secondAttribute="centerY" id="erH-Tc-o36"/>
+                                </constraints>
+                            </view>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDr-aX-ZQf" customClass="CameraLiveView" customModule="HUDViewUI" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="167" width="393" height="554"/>
+                                <color key="backgroundColor" systemColor="systemMintColor"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFa-hf-PeM">
+                                <rect key="frame" x="0.0" y="740" width="393" height="44"/>
+                                <items>
+                                    <barButtonItem title="Selfie" image="camera.rotate" catalog="system" id="kqw-OS-uz2">
+                                        <connections>
+                                            <action selector="SelfieButtonHandler:" destination="BYZ-38-t0r" id="g5A-LE-PlX"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Current" image="mappin.and.ellipse" catalog="system" id="x49-zA-hUd">
+                                        <connections>
+                                            <action selector="LocationButtonHandler:" destination="BYZ-38-t0r" id="bmV-ff-1ZW"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Radar" image="target" catalog="system" id="hgh-Z3-rbf">
+                                        <connections>
+                                            <action selector="RadarButtonHandler:" destination="BYZ-38-t0r" id="Me5-DC-TBq"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" systemColor="systemGreenColor"/>
+                            </toolbar>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="x09-kI-PKB" secondAttribute="top" id="4RK-Rq-JLu"/>
+                            <constraint firstItem="xFa-hf-PeM" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="Izh-FP-wp9"/>
+                            <constraint firstItem="xFa-hf-PeM" firstAttribute="top" secondItem="fDr-aX-ZQf" secondAttribute="bottom" constant="19" id="RJQ-Pk-xSt"/>
+                            <constraint firstItem="x09-kI-PKB" firstAttribute="trailing" secondItem="fDr-aX-ZQf" secondAttribute="trailing" id="Xsc-UU-x47"/>
+                            <constraint firstItem="x09-kI-PKB" firstAttribute="centerX" secondItem="xFa-hf-PeM" secondAttribute="centerX" id="ZUH-fd-kCc"/>
+                            <constraint firstAttribute="trailing" secondItem="fDr-aX-ZQf" secondAttribute="trailing" id="ad4-pm-Lu0"/>
+                            <constraint firstItem="x09-kI-PKB" firstAttribute="leading" secondItem="fDr-aX-ZQf" secondAttribute="leading" id="dTW-3P-Gll"/>
+                            <constraint firstItem="x09-kI-PKB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="noh-fg-a8X"/>
+                            <constraint firstItem="xFa-hf-PeM" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="uZK-Sq-jJZ"/>
+                            <constraint firstItem="fDr-aX-ZQf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ueZ-BN-Nfh"/>
+                            <constraint firstItem="fDr-aX-ZQf" firstAttribute="top" secondItem="x09-kI-PKB" secondAttribute="bottom" id="vCB-jS-Of4"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="CompassHeading" destination="nTx-aQ-RcD" id="au1-oz-UyY"/>
+                        <outlet property="CurrentLocationButton" destination="x49-zA-hUd" id="XcE-Kq-FSa"/>
+                        <outlet property="LiveView" destination="fDr-aX-ZQf" id="Wcx-iX-vYm"/>
+                        <outlet property="RadarViewButton" destination="hgh-Z3-rbf" id="Gzz-vP-zvp"/>
+                        <outlet property="SelfieButton" destination="kqw-OS-uz2" id="vfN-AQ-uRA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-19.083969465648853" y="105.63380281690141"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera.rotate" catalog="system" width="128" height="96"/>
+        <image name="mappin.and.ellipse" catalog="system" width="106" height="128"/>
+        <image name="target" catalog="system" width="128" height="128"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.78431372549019607" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

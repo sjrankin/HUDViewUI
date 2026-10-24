@@ -138,6 +138,8 @@
 				DEVELOPMENT_TEAM = 4BB235M4GL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HUDViewUI/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera will be used to show your current surroundings.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App would like to access location to function properly.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -170,6 +172,8 @@
 				DEVELOPMENT_TEAM = 4BB235M4GL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HUDViewUI/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera will be used to show your current surroundings.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App would like to access location to function properly.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
