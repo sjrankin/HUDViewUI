@@ -26,27 +26,36 @@ import Combine
     /// horizon line, the points of interest) stays hidden. In the Simulator only the device "points" to due north.
     static let SimulatorHeading: Double = 0
     
-    var TrueHeading: Double?
+    /// The heading in degrees for `Heading`, true north if the phone has a fix and magnetic north if it does not. In the Simulator,
+    /// which has no compass, it is `SimulatorHeading`. Nil when there is none.
+    static func HeadingValue(_ Heading: CLHeading?) -> Double?
     {
-        if let heading = CurrentHeading?.trueHeading, heading >= 0
+        if let True = Heading?.trueHeading, True >= 0
         {
-            return heading
+            return True
         }
-        if let heading = CurrentHeading?.magneticHeading
+        if let Magnetic = Heading?.magneticHeading
         {
-            return heading
+            return Magnetic
         }
 #if targetEnvironment(simulator)
-        return Self.SimulatorHeading
+        return SimulatorHeading
 #else
         return nil
 #endif
     }
     
+    var TrueHeading: Double?
+    {
+        LocationManager.HeadingValue(CurrentHeading)
+    }
+    
+    /// Publishes the heading each time it changes. Uses the value the publisher delivers, because `@Published` sends it
+    /// before the property itself is updated.
     var TrueHeadingPublisher: AnyPublisher<Double?, Never>
     {
         $CurrentHeading
-            .map {_ in self.TrueHeading }
+            .map { LocationManager.HeadingValue($0) }
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

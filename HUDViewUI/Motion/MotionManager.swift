@@ -21,7 +21,8 @@ import Combine
     
     static let ToDegrees  = 180.0 / .pi
     
-    /// How much of each new reading is taken in (the rest is the old value): 1 is no smoothing.
+    /// How much of each new reading is taken in (the rest is the old value): 1 is no smoothing. Used to
+    /// reduce the natural shakiness of a hand-held phone.
     static let SmoothingWeight = 0.35
     
     /// A low-pass filter on the gravity vector, so the horizon does not tremble with the hand.

@@ -16,11 +16,11 @@ class ViewController: UIViewController
         super.viewDidLoad()
         
         InitializeCompassLabel()
+        InitializeCompassBar()
         InitializeMotion()
         InitializeLocation()
         
-        CompassHeading.text = ""
-        CompassHeadingDirection.text = ""
+        CompassHeading.text = "Hi!"
         LiveView.PreviewLayer.session = Session
         LiveView.PreviewLayer.videoGravity = .resizeAspectFill
         SelfieButton.changesSelectionAsPrimaryAction = true
@@ -48,40 +48,6 @@ class ViewController: UIViewController
         super.viewDidLayoutSubviews()
         // A rotation of the screen always lays the views out again, so this is where the horizon and the camera follow it.
         ApplyInterfaceOrientation()
-    }
-    
-    /// Initialize the location manger. Supplies the heading and current location.
-    func InitializeLocation()
-    {
-        LM.RequestPermission()
-        
-        LM.$CurrentHeading
-            .sink
-        {
-            [weak self] _ in
-            guard let self else
-            {
-                return
-            }
-            if let Heading = self.LM.TrueHeading
-            {
-                self.CompassHeading.text = "\(Int(Heading.rounded()))°"
-                self.CompassHeadingDirection.text = LM.CompassDirection
-            }
-        }
-        .store(in: &Cancellables)
-        
-        LM.$AuthorizationStatus
-            .removeDuplicates()
-            .sink
-        {
-            [weak self] Status in
-            guard self != nil else
-            {
-                return
-            }
-        }
-        .store(in: &Cancellables)
     }
     
     /// Initialize the motion manager. Supplies pitch, roll, and yaw.
@@ -122,21 +88,36 @@ class ViewController: UIViewController
         CompassHeading.clipsToBounds = true
     }
     
+    func InitializeCompassBar()
+    {
+        //The bar itself (the full-width black view), not the heading label's narrow container.
+        let Bar: UIView = CompassBarControl
+        Bar.insertSubview(CompassBar, at: 0)
+        CompassBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate(
+            [
+                CompassBar.topAnchor.constraint(equalTo: Bar.topAnchor),
+                CompassBar.bottomAnchor.constraint(equalTo: Bar.bottomAnchor),
+                CompassBar.leadingAnchor.constraint(equalTo: Bar.leadingAnchor),
+                CompassBar.trailingAnchor.constraint(equalTo: Bar.trailingAnchor)
+            ])
+    }
+    
     // MARK: - Storyboard outlets.
     @IBOutlet weak var SelfieButton: UIBarButtonItem!
     @IBOutlet weak var RadarViewButton: UIBarButtonItem!
     @IBOutlet weak var HorizonLockButton: UIBarButtonItem!
     @IBOutlet weak var CurrentLocationButton: UIBarButtonItem!
     @IBOutlet weak var CompassHeading: UILabel!
-    @IBOutlet weak var CompassHeadingDirection: UILabel!
     @IBOutlet weak var LiveView: CameraLiveView!
-    @IBOutlet weak var CompassBarView: UIView!
+    @IBOutlet weak var CompassBarControl: UIView!
     
     // MARK: - Live View
     let Session = AVCaptureSession()
     let SessionQueue = DispatchQueue(label: "HudViewUI")
     var CurrentInput: AVCaptureDeviceInput?
     var Overlay: MainOverlay?
+    var CompassBar = CompassBarView()
     
     // MARK: - Location manager
     var LM = LocationManager()

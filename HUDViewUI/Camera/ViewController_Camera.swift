@@ -15,7 +15,7 @@ extension ViewController
     {
         InSelfieMode.toggle()
         SelfieButton.isSelected = InSelfieMode
-        let Position:AVCaptureDevice.Position = InSelfieMode ? .front : .back
+        let Position: AVCaptureDevice.Position = InSelfieMode ? .front : .back
         SessionQueue.async
         {
             self.UseCamera(Position)
@@ -54,6 +54,9 @@ extension ViewController
             self.Overlay?.setNeedsLayout()
             self.ApplyInterfaceOrientation()
         }
+         
+        let LongDegrees = Double(CurrentInput?.device.activeFormat.videoFieldOfView ?? 0)
+        print("Long Side = \(Int(LongDegrees))°")
     }
     
     /// Tells the overlay and the camera preview which way the interface is turned. Call it whenever the layout changes (the screen

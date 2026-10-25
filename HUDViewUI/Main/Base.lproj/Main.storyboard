@@ -20,32 +20,27 @@
                                 <rect key="frame" x="0.0" y="118" width="393" height="64"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="sXo-KU-GAX">
-                                        <rect key="frame" x="136.66666666666666" y="4.6666666666666714" width="119.99999999999997" height="55"/>
+                                        <rect key="frame" x="146.66666666666666" y="4.6666666666666714" width="100" height="55"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTx-aQ-RcD">
-                                                <rect key="frame" x="0.0" y="0.0" width="120" height="33.666666666666664"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="33.666666666666664"/>
                                                 <color key="backgroundColor" red="0.99942404029999998" green="0.98555368190000003" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="120" id="VJz-ab-6EN"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="1Ue-Oq-Mo4"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roF-bZ-J9s">
-                                                <rect key="frame" x="40" y="35.666666666666671" width="39.666666666666657" height="19.333333333333329"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
+                                                <size key="shadowOffset" width="0.0" height="0.0"/>
                                             </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                <color key="backgroundColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="MKg-eB-jJV"/>
                                     <constraint firstItem="sXo-KU-GAX" firstAttribute="centerX" secondItem="x09-kI-PKB" secondAttribute="centerX" id="XWO-OV-9Ky"/>
-                                    <constraint firstItem="sXo-KU-GAX" firstAttribute="centerY" secondItem="x09-kI-PKB" secondAttribute="centerY" id="wkC-HM-hUz"/>
+                                    <constraint firstItem="sXo-KU-GAX" firstAttribute="top" secondItem="x09-kI-PKB" secondAttribute="top" constant="4" id="wkC-HM-hUz"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDr-aX-ZQf" customClass="CameraLiveView" customModule="HUDViewUI" customModuleProvider="target">
@@ -55,7 +50,7 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFa-hf-PeM">
                                 <rect key="frame" x="0.0" y="740" width="393" height="44"/>
                                 <items>
-                                    <barButtonItem title="Selfie" image="camera.rotate" catalog="system" id="kqw-OS-uz2">
+                                    <barButtonItem title="Selfie" image="arrow.trianglehead.2.clockwise.rotate.90" catalog="system" id="kqw-OS-uz2">
                                         <connections>
                                             <action selector="SelfieButtonHandler:" destination="BYZ-38-t0r" id="g5A-LE-PlX"/>
                                         </connections>
@@ -96,9 +91,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="CompassBarView" destination="x09-kI-PKB" id="L8O-1b-HhX"/>
+                        <outlet property="CompassBarControl" destination="x09-kI-PKB" id="L8O-1b-HhX"/>
                         <outlet property="CompassHeading" destination="nTx-aQ-RcD" id="au1-oz-UyY"/>
-                        <outlet property="CompassHeadingDirection" destination="roF-bZ-J9s" id="Ctu-Ff-Ndy"/>
                         <outlet property="CurrentLocationButton" destination="x49-zA-hUd" id="XcE-Kq-FSa"/>
                         <outlet property="HorizonLockButton" destination="w42-QD-Jaz" id="ikQ-Ue-BgM"/>
                         <outlet property="LiveView" destination="fDr-aX-ZQf" id="Wcx-iX-vYm"/>
@@ -112,10 +106,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera.rotate" catalog="system" width="128" height="96"/>
+        <image name="arrow.trianglehead.2.clockwise.rotate.90" catalog="system" width="128" height="121"/>
         <image name="lock.fill" catalog="system" width="107" height="128"/>
         <image name="mappin.and.ellipse" catalog="system" width="106" height="128"/>
         <image name="target" catalog="system" width="128" height="128"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -124,9 +124,6 @@
         </systemColor>
         <systemColor name="systemMintColor">
             <color red="0.0" green="0.78431372549019607" blue="0.70196078431372544" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
