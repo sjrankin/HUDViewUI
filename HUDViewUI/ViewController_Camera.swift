@@ -44,6 +44,46 @@ extension ViewController
             Session.addInput(Old)
         }
         Session.commitConfiguration()
+        // The horizon's distance from the middle of the picture depends on this camera's field of view.
+        let FieldOfView = Double(Device.activeFormat.videoFieldOfView)
+        let IsFront = Position == .front
+        DispatchQueue.main.async
+        {
+            self.Overlay?.FieldOfView = FieldOfView
+            self.Overlay?.IsFrontCamera = IsFront
+            self.Overlay?.setNeedsLayout()
+            self.ApplyInterfaceOrientation()
+        }
+    }
+    
+    /// Tells the overlay and the camera preview which way the interface is turned. Call it whenever the layout changes (the screen
+    /// rotating always does that) and when a camera has been chosen.
+    func ApplyInterfaceOrientation()
+    {
+        let Orientation = view.window?.windowScene?.effectiveGeometry.interfaceOrientation ?? .portrait
+        Overlay?.Orientation = Orientation
+        // The picture has to be turned with the interface, or the camera shows sideways in landscape. The selfie camera's sensor
+        // sits turned half a circle the other way round from the back camera's, so its two landscape angles are swapped.
+        let IsFront = Overlay?.IsFrontCamera ?? false
+        let Angle: CGFloat
+        switch Orientation
+        {
+            case .landscapeRight:
+                Angle = IsFront ? 180 : 0
+                
+            case .landscapeLeft:
+                Angle = IsFront ? 0 : 180
+                
+            case .portraitUpsideDown:
+                Angle = 270
+                
+            default:
+                Angle = 90
+        }
+        if let Connection = LiveView.PreviewLayer.connection, Connection.isVideoRotationAngleSupported(Angle)
+        {
+            Connection.videoRotationAngle = Angle
+        }
     }
     
     func RequestCameraAccess()

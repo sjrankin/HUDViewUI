@@ -21,6 +21,7 @@ extension ViewController
         {
             HideToast()
         }
+        CurrentLocationButton.isSelected = ToastPopup != nil
     }
     
     func ShowToast()

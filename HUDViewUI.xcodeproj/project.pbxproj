@@ -6,8 +6,13 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		177B52CE308D2DDA00BE76D3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 177B52CD308D2DDA00BE76D3 /* README.md */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		177B52A9308CF42E00BE76D3 /* HUDViewUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HUDViewUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		177B52CD308D2DDA00BE76D3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -43,6 +48,7 @@
 		177B52A0308CF42E00BE76D3 = {
 			isa = PBXGroup;
 			children = (
+				177B52CD308D2DDA00BE76D3 /* README.md */,
 				177B52AB308CF42E00BE76D3 /* HUDViewUI */,
 				177B52AA308CF42E00BE76D3 /* Products */,
 			);
@@ -115,6 +121,7 @@
 		177B52A7308CF42E00BE76D3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				177B52CE308D2DDA00BE76D3 /* README.md in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */

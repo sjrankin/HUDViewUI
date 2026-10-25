@@ -83,8 +83,8 @@ extension Toast
         let Label = UILabel()
         Label.textColor = .white
         Label.textAlignment = .center
-        Label.font = IsBold ? .monospacedSystemFont(ofSize: 20, weight: .bold) :
-            .monospacedSystemFont(ofSize: 20, weight: .regular)
+        Label.font = IsBold ? .systemFont(ofSize: 20, weight: .bold) :
+                              .systemFont(ofSize: 20, weight: .regular)
         return Label
     }
 }
