@@ -41,6 +41,9 @@ class ViewController: UIViewController
             ]
         )
         Overlay = Actual
+        //The location and heading may have arrived before the overlay existed.
+        Actual.SetHeading(LM.TrueHeading ?? 0.0)
+        Actual.SetLocation(LM.CurrentLocation)
     }
     
     override func viewDidLayoutSubviews()
@@ -71,6 +74,8 @@ class ViewController: UIViewController
     
     @IBAction func RadarButtonHandler(_ sender: Any)
     {
+        let Radar = UINavigationController(rootViewController: RadarViewController(LocationSource: LM))
+        present(Radar, animated: true)
     }
     
     @IBAction func HorizonLockHandler(_ sender: Any)

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Combine
 import CoreMotion
+import CoreLocation
 
 class MainOverlay: UIView
 {
@@ -34,15 +35,44 @@ class MainOverlay: UIView
         HorizonLine.strokeColor = UIColor.systemRed.withAlphaComponent(0.85).cgColor
         HorizonLine.lineWidth = 4.0
         layer.addSublayer(HorizonLine)
+        addSubview(POIMarkers)
     }
     
     override func layoutSubviews()
     {
         super.layoutSubviews()
+        POIMarkers.frame = bounds
         DrawHorizon(LastGravity)
     }
     
     let HorizonLine = CAShapeLayer()
+    let POIMarkers = POIOverlayView()
+    
+    /// The compass heading (the way the top of the phone points) and the user's height above sea level.
+    private var DeviceHeading: Double = 0.0
+    private var UserHeight: Double = 0.0
+    
+    func SetHeading(_ NewHeading: Double)
+    {
+        DeviceHeading = NewHeading
+        DrawHorizon(LastGravity)
+    }
+    
+    func SetLocation(_ Location: CLLocation?)
+    {
+        guard let Location else
+        {
+            POIMarkers.SetPOIs([])
+            return
+        }
+        UserHeight = Location.altitude
+        //Route waypoints are not shown on the camera view.
+        let Nearby = POIVisibilityService.nearestPOIs(from: Location.coordinate,
+                                                      maxDistance: 12742 * 1000, //diameter of the earth in meters
+                                                      limit: 500)
+        POIMarkers.SetPOIs(Nearby.filter { $0.poi.type != .route })
+        DrawHorizon(LastGravity)
+    }
     
     /// The camera's field of view, in degrees, along the long side of its picture (the preview's vertical side in portrait). The
     /// view controller sets this when a camera is chosen; the horizon's distance from the middle of the view depends on it.
@@ -55,7 +85,7 @@ class MainOverlay: UIView
     ///
     /// The camera's elevation above the horizon is the sine-inverse of gravity's component along the camera's axis, and the horizon
     /// is that far (in focal lengths) from the middle of the picture, on the side gravity points to on the screen.
-    func HorizonPose(_ Gravity: CMAcceleration) -> (Center: CGPoint, Angle: CGFloat)?
+    func HorizonPose(_ Gravity: CMAcceleration) -> (Center: CGPoint, Angle: CGFloat, Pitch: Double)?
     {
         guard bounds.width > 0, bounds.height > 0 else
         {
@@ -63,7 +93,7 @@ class MainOverlay: UIView
         }
         if LockedHorizon
         {
-            return (CGPoint(x: bounds.midX, y: bounds.midY), 0.0)
+            return (CGPoint(x: bounds.midX, y: bounds.midY), 0.0, 0.0)
         }
         // Gravity's direction on the screen (screen y points down), as a unit vector. Gravity comes in the phone's own
         // axes; `Screen` turns it into the screen's axes, which are different once the interface has turned to landscape.
@@ -79,16 +109,21 @@ class MainOverlay: UIView
         let Along = IsFrontCamera ? -Gravity.z : Gravity.z
         let Elevation = asin(max(-1.0, min(1.0, Along)))
         
-        // The video fills the view and is 3:4 in portrait (4:3 in landscape), so its long side, in points, is:
-        let LongSide = Orientation.isLandscape ? max(bounds.width, bounds.height * 4.0 / 3.0)
-                                               : max(bounds.height, bounds.width * 4.0 / 3.0)
-        let FocalPoints = LongSide / (2.0 * tan(FieldOfView * .pi / 180.0 / 2.0))
         // tan() grows without limit looking straight up or down: keep the line a finite distance away.
         let Offset = max(-3000.0, min(3000.0, FocalPoints * tan(Elevation)))
         
         let Center = CGPoint(x: bounds.width / 2.0 + Direction.x * Offset,
                              y: bounds.height / 2.0 + Direction.y * Offset)
-        return (Center, CGFloat(atan2(-Screen.Right, -Screen.Up)))
+        return (Center, CGFloat(atan2(-Screen.Right, -Screen.Up)), Elevation)
+    }
+    
+    /// The camera's focal length in points. The video fills the view and is 3:4 in portrait (4:3 in landscape), so its long
+    /// side, in points, is:
+    var FocalPoints: CGFloat
+    {
+        let LongSide = Orientation.isLandscape ? max(bounds.width, bounds.height * 4.0 / 3.0)
+                                               : max(bounds.height, bounds.width * 4.0 / 3.0)
+        return LongSide / (2.0 * tan(FieldOfView * .pi / 180.0 / 2.0))
     }
     
     /// The way the interface is turned (set by the view controller whenever the screen rotates). The phone's own axes never
@@ -141,9 +176,20 @@ class MainOverlay: UIView
         guard let Pose = HorizonPose(Gravity) else
         {
             HorizonLine.isHidden = true
+            POIMarkers.Clear()
             return
         }
         HorizonLine.isHidden = false
+        //The points of interest hang off the same pose; the selfie camera looks the other way, so none are shown for it.
+        if IsFrontCamera
+        {
+            POIMarkers.Clear()
+        }
+        else
+        {
+            POIMarkers.Update(Facing: LocationManager.FacingHeading(DeviceHeading, Orientation: Orientation),
+                              UserHeight: UserHeight, Pose: Pose, Focal: FocalPoints, OnHorizon: LockedHorizon)
+        }
         // A line longer than the view can ever show, centered on the layer's own position, so its ends are never seen.
         let Reach = hypot(bounds.width, bounds.height)
         let Path = UIBezierPath()

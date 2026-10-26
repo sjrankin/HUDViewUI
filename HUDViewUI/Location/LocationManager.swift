@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 import Combine
+import UIKit
 
 @MainActor class LocationManager: NSObject, ObservableObject
 {
@@ -43,6 +44,28 @@ import Combine
 #else
         return nil
 #endif
+    }
+    
+    /// The compass heading is the way the top of the phone points. The way the phone faces (the camera's direction) is a
+    /// quarter turn from that when the interface is in landscape.
+    static func FacingHeading(_ DeviceHeading: Double, Orientation: UIInterfaceOrientation) -> Double
+    {
+        let Offset: Double
+        switch Orientation
+        {
+            case .landscapeRight:
+                Offset = 90.0
+                
+            case .landscapeLeft:
+                Offset = -90.0
+                
+            case .portraitUpsideDown:
+                Offset = 180.0
+                
+            default:
+                Offset = 0.0
+        }
+        return (DeviceHeading + Offset + 360.0).truncatingRemainder(dividingBy: 360.0)
     }
     
     var TrueHeading: Double?

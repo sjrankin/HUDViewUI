@@ -50,16 +50,35 @@ enum POIType: String, CaseIterable
     {
         switch self
         {
-            case .city: return "building.2.fill"
-            case .mountain: return "triangle.fill"
-            case .bridge: return "water.waves.and.arrow.trianglehead.up"
-            case .park: return "tree.fill"
-            case .lake: return "drop.fill"
-            case .forest: return "tree.fill"
-            case .volcano: return "triangle.fill"
-            case .river: return "water.waves"
-            case .test: return "testtube.2"
-            case .route: return "mappin.and.ellipse"
+            case .city:
+                return "building.2.fill"
+                
+            case .mountain:
+                return "triangle.fill"
+
+            case .bridge:
+                return "water.waves.and.arrow.trianglehead.up"
+
+            case .park:
+                return "tree.fill"
+
+            case .lake:
+                return "drop.fill"
+
+            case .forest:
+                return "tree.fill"
+
+            case .volcano:
+                return "triangle.fill"
+
+            case .river:
+                return "water.waves"
+
+            case .test:
+                return "circle.and.line.horizontal"
+
+            case .route:
+                return "mappin.and.ellipse"
         }
     }
     
@@ -67,15 +86,32 @@ enum POIType: String, CaseIterable
     {
         switch self
         {
-            case .city: return "orange"
-            case .mountain: return "brown"
-            case .bridge: return "red"
-            case .park: return "green"
-            case .lake, .river: return "blue"
-            case .forest: return "green"
-            case .volcano: return "red"
-            case .test: return "purple"
-            case .route: return "black"
+            case .city:
+                return "orange"
+                
+            case .mountain:
+                return "brown"
+                
+            case .bridge:
+                return "red"
+                
+            case .park:
+                return "green"
+                
+            case .lake, .river:
+                return "blue"
+                
+            case .forest:
+                return "green"
+                
+            case .volcano:
+                return "red"
+                
+            case .test:
+                return "purple"
+                
+            case .route:
+                return "black"
         }
     }
     
@@ -83,16 +119,35 @@ enum POIType: String, CaseIterable
     {
         switch self
         {
-            case .city: return "Cities"
-            case .mountain: return "Mountains"
-            case .bridge: return "Bridges"
-            case .park: return "Parks"
-            case .lake: return "Lakes"
-            case .forest: return "Forests"
-            case .volcano: return "Volcanoes"
-            case .river: return "Rivers"
-            case .test: return "Test"
-            case .route: return "Route Waypoint"
+            case .city:
+                return "Cities"
+                
+            case .mountain:
+                return "Mountains"
+                
+            case .bridge:
+                return "Bridges"
+                
+            case .park:
+                return "Parks"
+                
+            case .lake:
+                return "Lakes"
+                
+            case .forest:
+                return "Forests"
+                
+            case .volcano:
+                return "Volcanoes"
+                
+            case .river:
+                return "Rivers"
+                
+            case .test:
+                return "Test"
+                
+            case .route:
+                return "Route Waypoint"
         }
     }
 }

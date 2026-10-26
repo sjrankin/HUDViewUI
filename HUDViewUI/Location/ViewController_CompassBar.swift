@@ -38,7 +38,16 @@ extension ViewController
                 return
             }
             self.CompassBar.Heading = Heading
+            self.Overlay?.SetHeading(Heading)
             self.CompassHeading.text = "\(Int(Heading.rounded()))°"
+        }
+        .store(in: &Cancellables)
+        
+        LM.$CurrentLocation
+            .sink
+        {
+            [weak self] Location in
+            self?.Overlay?.SetLocation(Location)
         }
         .store(in: &Cancellables)
     }
