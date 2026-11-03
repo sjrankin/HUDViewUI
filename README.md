@@ -8,6 +8,12 @@ HUDViewUI is a clone of HUDView. The main differences are:
 There are several minor differences in the UI and functionality. \
 The purposes of HUDViewUI was to requaint myself with UIKit after using SwiftUI for several years.\
 
+Animation of HUDViewUI when walking around outside, showing the directions to various set points of interest, both directionally and vertically.\
+<img src="Images/MainHUDViewSmall.gif" alt="Animation of HUDViewUI when walking around outside.">\
+
+Animation of HUDViewUI's radar plot showing the location of points of interest as well as the distance.\
+<img src="Images/RadarPlot.gif" alt="Animation of HUDViewUI's radar plot.">\
+
 ## UI Layout
 The layout is generally the same between HUDView and HUDViewUI but with several minor changes.
 
@@ -34,7 +40,7 @@ In order to function, the user must give location and camera permission. When ru
 2. iPhone orientation and gravity.
 3. Set of points of interest.
 
-## Next
+## Plans
 1. Add ability to filter visible points of interest.
 2. Ability to add, edit, or remove points of interest.
 3. It would be nice but does not follow Apple guidelines: port this code (or HUDView) to CarPlay.
